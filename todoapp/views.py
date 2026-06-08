@@ -11,8 +11,10 @@ from django.contrib.auth.decorators import login_required
 def home(request):
     if request.method == "POST":
         task = request.POST.get('task')
-        new_todo = todo(username = request.user, item_name = task)
-        new_todo.save()
+        #store task only if task in not empty and not just spaces 
+        if task and task.strip():
+          new_todo = todo(username = request.user, item_name = task)
+          new_todo.save()
         return redirect('home-page')
     todos = todo.objects.filter(username = request.user)
     return render(request, 'todoapp/todo.html', {'todos':todos})
