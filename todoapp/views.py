@@ -81,7 +81,6 @@ def delete(request,item_name):
     return redirect('home-page')
 
 def update(request,item_name):
-    get_todo = todo.objects.get(username=request.user, item_name=item_name)
-    get_todo.status = True
-    get_todo.save()
+    #Update the existing task status..
+    todo.objects.filter(username=request.user, item_name=item_name).update(status=True)
     return redirect('home-page')
